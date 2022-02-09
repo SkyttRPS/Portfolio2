@@ -80,7 +80,7 @@ public class Graph {
                 }
             }
 
-            System.out.println("Minimum Spanning Tree Total:");
+            System.out.println("Minimum Spanning Tree Totals:");
             //Printing the total distance of MST
             System.out.println("MST distance is: " + MST + " Km");
             //Printing the total price of the spanning tree
