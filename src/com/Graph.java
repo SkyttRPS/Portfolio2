@@ -38,11 +38,10 @@ public class Graph {
         MinHeap<Vertex> Q = new MinHeap<Vertex>();
 
         for (int vertex = 0; vertex < vertices.size(); vertex++) {
-            //all vertex dist are set to Max_value (infinity)
+            // Vertex distances are set to MAX_VALUE, corresponding to infinity
             vertices.get(vertex).setDistance(Integer.MAX_VALUE);
-            //since we don't start out with a predecessor before we iterate we set them all to null
-            vertices.get(vertex).setPrevious(null);
-            Q.insert(vertices.get(vertex)); //creates a queue for all vertices in the graph
+            vertices.get(vertex).setPrevious(null); // We do not start with a predecessor
+            Q.insert(vertices.get(vertex)); // Queuing all the vertices up for the graph
 
         }
 
@@ -56,16 +55,15 @@ public class Graph {
 
 
             while (!Q.isEmpty()) {
-                //U contains the list of vertices that have been visited
+                // Extracting the minimum nodes we visit saving them in u
                 Vertex u = Q.extractMin();
 
-                for (int vIndex = 0; vIndex < u.getOutEdges().size(); vIndex++) { //O(2E), because while a V to a V one path
+                for (int vIndex = 0; vIndex < u.getOutEdges().size(); vIndex++) {
                     //V-U is the list of vertices that haven't been visited
                     Edge v = u.getOutEdges().get(vIndex);
 
                     if (v.getWeight() < v.getTo().dist) {
-                        v.getTo().setDistance(v.getWeight()); //sets the v's weight/dist as the weight of the parent which is v
-                        v.getTo().setPrevious(u); //set the u nodes vertex to be v - thereby v is removed from queue
+                        v.getTo().setDistance(v.getWeight()); // Setting the edge's weight & dist as the weight of the
                         int pos = Q.getPosition(v.getTo());
                         Q.decreaseKey(pos);
                     }
