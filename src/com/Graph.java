@@ -55,7 +55,7 @@ public class Graph {
 
 
             while (!Q.isEmpty()) {
-                // Extracting the minimum nodes we visit saving them in u
+                // Extracting the minimum vertex we visit saving them in Vertex u
                 Vertex u = Q.extractMin();
 
                 for (int vIndex = 0; vIndex < u.getOuterEdges().size(); vIndex++) {
