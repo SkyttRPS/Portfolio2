@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class MinHeap<T extends Comparable<T> >{
     HashMap<T,Integer> positionTable=new HashMap<T, Integer>();
 
-    // root is at index 0
+    // Setting the root at the first index 0
     ArrayList<T> minheap;
     private int size;
     public MinHeap(){
@@ -51,9 +51,6 @@ public class MinHeap<T extends Comparable<T> >{
         }
     }
 
-    public T viewMin(){
-        return minheap.get(0);
-    }
     private boolean movedown(int pos){
         boolean leftsmaller = leftChild(pos)<size
                 && (minheap.get(leftChild(pos)).compareTo(minheap.get(pos))<0);

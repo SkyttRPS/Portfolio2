@@ -26,8 +26,8 @@ public class Graph {
         for (Vertex vertex : vertices) {
             v = vertex;
             System.out.println("From Vertex: " + v.getName());
-            for (int j = 0; j < v.getOutEdges().size(); j++) {
-                Edge currentEdge = v.getOutEdges().get(j);
+            for (int j = 0; j < v.getOuterEdges().size(); j++) {
+                Edge currentEdge = v.getOuterEdges().get(j);
                 System.out.println("To " + currentEdge.getTo().getName() + " weight: " + currentEdge.getWeight());
             }
             System.out.println(" ");
@@ -50,7 +50,7 @@ public class Graph {
 
             vertices.get(root).setDistance(0);
             int position = Q.getPosition(vertices.get(root));
-            Q.decreaseKey(position);
+            Q.decreaseKey(position); //setting the key to the minimum of its previous position
             int MST = 0;
 
 
@@ -58,18 +58,19 @@ public class Graph {
                 // Extracting the minimum nodes we visit saving them in u
                 Vertex u = Q.extractMin();
 
-                for (int vIndex = 0; vIndex < u.getOutEdges().size(); vIndex++) {
-                    //V-U is the list of vertices that haven't been visited
-                    Edge v = u.getOutEdges().get(vIndex);
+                for (int vIndex = 0; vIndex < u.getOuterEdges().size(); vIndex++) {
+                    //Get edges from vertex
+                    Edge v = u.getOuterEdges().get(vIndex);
 
                     if (v.getWeight() < v.getTo().dist) {
-                        v.getTo().setDistance(v.getWeight()); // Setting the edge's weight & dist as the weight of the
+                        v.getTo().setDistance(v.getWeight()); // Getting the weights
                         int pos = Q.getPosition(v.getTo());
-                        Q.decreaseKey(pos);
+                        Q.decreaseKey(pos); //setting the key to the minimum of its previous position
                     }
                 }
 
-                MST += u.dist;
+                // Minimum span found
+                MST += u.dist; // Adding the edge weight to the MST
 
                 if (u.prev != null) {
                     //Printing out the edges in the MST
@@ -90,24 +91,28 @@ public class Graph {
     }
 }
 
+// Vertex class for used for the MinHeap Implementation
 class Vertex implements Comparable<Vertex>{
     String name;
-    ArrayList<Edge> OutEdges;
+    ArrayList<Edge> OuterEdges;
     Integer dist = Integer.MAX_VALUE;
     Vertex prev = null;
+
+    // Vertex constructor
     public Vertex(String id){
-        name=id;
-        OutEdges=new ArrayList<Edge>();
+        name = id;
+        OuterEdges = new ArrayList<Edge>();
     }
-    public void addOutEdge(Edge e) {
-        OutEdges.add(e);
+
+    public void addOuterEdge(Edge e) {
+        OuterEdges.add(e);
     }
 
     @Override
     public int compareTo(Vertex o) {
-        if (this.dist<o.dist)
+        if (this.dist < o.dist)
             return -1;
-        if (this.dist>o.dist)
+        if (this.dist > o.dist)
             return 1;
         return 0;
     }
@@ -117,8 +122,8 @@ class Vertex implements Comparable<Vertex>{
         return name;
     }
 
-    public ArrayList<Edge> getOutEdges() {
-        return OutEdges;
+    public ArrayList<Edge> getOuterEdges() {
+        return OuterEdges;
     }
 
     public Integer getDistance() {
@@ -134,6 +139,7 @@ class Vertex implements Comparable<Vertex>{
     }
 }
 
+// Edge class used for implementing the MST
 class Edge{
     Integer weight;
     Vertex from;
@@ -142,7 +148,7 @@ class Edge{
         this.from=from;
         this.to=to;
         this.weight=cost;
-        this.from.addOutEdge(this);
+        this.from.addOuterEdge(this);
     }
 
     public Vertex getTo() {
