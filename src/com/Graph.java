@@ -38,9 +38,9 @@ public class Graph {
         MinHeap<Vertex> Q = new MinHeap<Vertex>();
 
         for (int vertex = 0; vertex < vertices.size(); vertex++) {
-            // Vertex distances are set to MAX_VALUE, corresponding to infinity
+            // Vertex distances are set to MAX_VALUE or infinity
             vertices.get(vertex).setDistance(Integer.MAX_VALUE);
-            vertices.get(vertex).setPrevious(null); // We do not start with a predecessor
+            vertices.get(vertex).setPrevious(null); // No predecessor can be set from the start
             Q.insert(vertices.get(vertex)); // Queuing all the vertices up for the graph
 
         }
